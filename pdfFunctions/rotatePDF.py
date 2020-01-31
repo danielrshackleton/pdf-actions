@@ -34,3 +34,5 @@ def pdf_rotate(origFileName, newFileName):
 
             # writing rotated pages to new file
             pdfWriter.write(newFile)
+
+    return newFile
