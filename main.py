@@ -10,7 +10,9 @@ def main():
 
 
     # calling the PDFrotate function
-    rotatePDF.pdfRotate(origFileName,newFileName)
+    rotatePDF.pdf_rotate(origFileName, newFileName)
+
+
 
 
 if __name__ == "__main__":
