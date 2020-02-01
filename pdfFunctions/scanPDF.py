@@ -1,11 +1,13 @@
 import os
-import numpy as np
+import pprint
 
 from pdfminer.pdfdevice import PDFDevice
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
 from pdfminer.pdfparser import PDFParser
+from pdfminer.psparser import PSLiteral
+from pdfminer.pdfinterp import PDFObjRef
 from pdfminer.pdftypes import resolve1
 
 
@@ -20,9 +22,6 @@ def load_form(filename, password):
         else:
             doc = PDFDocument(parser, password)
 
-        if not doc.is_extractable:
-            raise PDFTextExtractionNotAllowed
-
         rsrcmgr = PDFResourceManager()
         device = PDFDevice(rsrcmgr)
         interpreter = PDFPageInterpreter(rsrcmgr, device)
@@ -31,27 +30,33 @@ def load_form(filename, password):
             interpreter.process_page(page)
 
         fields = resolve1(doc.catalog['AcroForm'])['Fields']
-        pdf_table = np.array([], str)
-        _table_row = np.array
+        pdf_table = {}
         for i in fields:
-            _table_row = _decode_fields(i)
-            np.concatenate((pdf_table, _table_row))
+            field = resolve1(i)
+            _table_row = _decode_fields(field)
+            pdf_table.update(_table_row)
 
-        print(pdf_table)
+        pprint.pprint(pdf_table)
+
 
 
 
 def _decode_fields(field_index):
     field = resolve1(field_index)
     name, value = _decode_decision(field.get('T', b''), '8'), _decode_decision(field.get('V', b''), '16')
-    print(f"{name}: {value}")
-    decoded_field = np.array([name, value])
+    decoded_field = {name: value}
     return decoded_field
 
 
 def _decode_decision(value, decode):
     if isinstance(value, bytes):
         return value.decode(f'utf-{decode}')
+    elif isinstance(value,  PSLiteral):
+        value = value.name
+        return value
+    elif isinstance(value, PDFObjRef):
+        value = resolve1(value)
+        return value
     else:
         return value
 
