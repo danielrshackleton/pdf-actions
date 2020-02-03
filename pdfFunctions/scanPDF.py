@@ -27,6 +27,9 @@ def load_form(filename, password):
     """ Loads pdf and extracts form data """
     # filename = os.pardir + "/" + filename
 
+    if '.pdf' not in filename:
+        sys.exit("Invalid file. Please use a .pdf file")
+
     with open(filename, 'rb') as file:
         parser = PDFParser(file)
         if password is None:
@@ -75,7 +78,7 @@ def _decode_decision(value, decode):
 
 
 def main():
-    my_file = 'inFile.pdf'
+    my_file = 'test.pdf'
     my_pass = None
     load_form(my_file, my_pass)
 

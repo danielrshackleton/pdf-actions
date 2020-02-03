@@ -20,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(prog='main', description='PDF file name and password (optional)')
 
     parser.add_argument("filename", default='test.pdf', help="Name of pdf file (please include '.pdf'")
-    parser.add_argument("--password", default='', help="Password field is optional")
+    parser.add_argument("--password", help="Password field is optional")
     args = parser.parse_args()
 
     file_name = args.filename
