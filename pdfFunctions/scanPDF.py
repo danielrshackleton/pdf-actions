@@ -1,19 +1,31 @@
 import os
+import sys
 import pprint
 
 from pdfminer.pdfdevice import PDFDevice
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
-from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
+from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfparser import PDFParser
 from pdfminer.psparser import PSLiteral
 from pdfminer.pdfinterp import PDFObjRef
 from pdfminer.pdftypes import resolve1
 
 
+def _pdf_type(doc):
+    """ Determines the type of PDF form, exits if invalid """
+
+    if doc.catalog.get('AcroForm') is not None:
+        return resolve1(doc.catalog['AcroForm'])['Fields']
+    elif doc.catalog.get('XFA') is not None:
+        return resolve1(doc.catalog['XFA'])['Fields']
+    else:
+        sys.exit('Invalid PDF type. Please use a valid electronic PDF form')
+
 
 def load_form(filename, password):
-    filename = os.pardir + "/" + filename
+    """ Loads pdf and extracts form data """
+    # filename = os.pardir + "/" + filename
 
     with open(filename, 'rb') as file:
         parser = PDFParser(file)
@@ -29,7 +41,7 @@ def load_form(filename, password):
         for page in PDFPage.create_pages(doc):
             interpreter.process_page(page)
 
-        fields = resolve1(doc.catalog['AcroForm'])['Fields']
+        fields = _pdf_type(doc)
         pdf_table = {}
         for i in fields:
             field = resolve1(i)
@@ -63,7 +75,7 @@ def _decode_decision(value, decode):
 
 
 def main():
-    my_file = 'test.pdf'
+    my_file = 'inFile.pdf'
     my_pass = None
     load_form(my_file, my_pass)
 
