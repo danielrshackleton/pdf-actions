@@ -25,7 +25,6 @@ def _pdf_type(doc):
 
 def load_form(filename, password):
     """ Loads pdf and extracts form data """
-    # filename = os.pardir + "/" + filename
 
     if '.pdf' not in filename:
         sys.exit("Invalid file. Please use a .pdf file")
@@ -78,7 +77,8 @@ def _decode_decision(value, decode):
 
 
 def main():
-    my_file = 'test.pdf'
+    my_file = '../test.pdf'
+
     my_pass = None
     load_form(my_file, my_pass)
 
