@@ -1,30 +1,40 @@
-import sys
 import os
-from pdfminer.pdfparser import PDFParser
-from pdfminer.pdfdocument import PDFDocument
-from pdfminer.pdfpage import PDFPage, PDFTextExtractionNotAllowed
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+import sys
+import pprint
+
 from pdfminer.pdfdevice import PDFDevice
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.pdfpage import PDFPage
+from pdfminer.pdfparser import PDFParser
+from pdfminer.psparser import PSLiteral
+from pdfminer.pdfinterp import PDFObjRef
 from pdfminer.pdftypes import resolve1
 
 
-def load_form(filename, password):
-    """Load pdf form contents into a nested list of name/value tuples"""
+def _pdf_type(doc):
+    """ Determines the type of PDF form, exits if invalid """
 
-    # get current directory
-    filename = os.pardir + "/" + filename
+    if doc.catalog.get('AcroForm') is not None:
+        return resolve1(doc.catalog['AcroForm'])['Fields']
+    elif doc.catalog.get('XFA') is not None:
+        return resolve1(doc.catalog['XFA'])['Fields']
+    else:
+        sys.exit('Invalid PDF type. Please use a valid electronic PDF form')
+
+
+def load_form(filename, password):
+    """ Loads pdf and extracts form data """
+
+    if '.pdf' not in filename:
+        sys.exit("Invalid file. Please use a .pdf file")
 
     with open(filename, 'rb') as file:
         parser = PDFParser(file)
-
-        # for when PDF form has password restrictions
         if password is None:
             doc = PDFDocument(parser)
         else:
             doc = PDFDocument(parser, password)
-
-        if not doc.is_extractable:
-            raise PDFTextExtractionNotAllowed
 
         rsrcmgr = PDFResourceManager()
         device = PDFDevice(rsrcmgr)
@@ -33,21 +43,44 @@ def load_form(filename, password):
         for page in PDFPage.create_pages(doc):
             interpreter.process_page(page)
 
-        fields = resolve1(doc.catalog['AcroForm'])['Fields']
+        fields = _pdf_type(doc)
+        pdf_table = {}
         for i in fields:
             field = resolve1(i)
-            name, value = field.get('T'), field.get('V')
-            pair = '{0}: {1}'.format(name, value)
-            print(pair)
+            _table_row = _decode_fields(field)
+            pdf_table.update(_table_row)
+
+        pprint.pprint(pdf_table)
+
+
+
+
+def _decode_fields(field_index):
+    field = resolve1(field_index)
+    name, value = _decode_decision(field.get('T', b''), '8'), _decode_decision(field.get('V', b''), '16')
+    decoded_field = {name: value}
+    return decoded_field
+
+
+def _decode_decision(value, decode):
+    if isinstance(value, bytes):
+        return value.decode(f'utf-{decode}')
+    elif isinstance(value,  PSLiteral):
+        value = value.name
+        return value
+    elif isinstance(value, PDFObjRef):
+        value = resolve1(value)
+        return value
+    else:
+        return value
+
+
 
 def main():
-    #myFile = sys.argv[1]
-    #myPass = sys.argv[2]
+    my_file = '../test.pdf'
 
-    myFile = 'test.pdf'
-    myPass = None
-
-    load_form(myFile, myPass)
+    my_pass = None
+    load_form(my_file, my_pass)
 
 
 if __name__ == "__main__":
