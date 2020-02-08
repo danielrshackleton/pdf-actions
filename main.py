@@ -13,7 +13,6 @@ def main():
     # new pdf file name
     newFileName = 'rotatedFile.pdf'
 
-
     # calling the PDFrotate function
     # rotatePDF.pdf_rotate(origFileName, newFileName)
 
