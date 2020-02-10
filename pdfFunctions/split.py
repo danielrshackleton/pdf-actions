@@ -1,11 +1,12 @@
-from PyPDF2 import PdfFileWriter, PdfFileReader
+import PyPDF2
 
 
-def split(in_file, out_file, start_page, end_page):
+def get_range(in_file, out_file, start_page, end_page):
+    """ Remove pages not in range """
 
     input_stream = open(in_file, 'rb')
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(in_file)
+    pdf_writer = PyPDF2.PdfFileWriter()
+    pdf_reader = PyPDF2.PdfFileReader(in_file)
 
     for i in range(min(start_page, end_page), max(start_page, end_page)):
         page_obj = pdf_reader.getPage(i)
@@ -25,4 +26,4 @@ if __name__ == '__main__':
     infile = samples + 'test.pdf'
     outfile = '../splitPDF.pdf'
 
-    split(infile, outfile, 2, 4)
+    get_range(infile, outfile, 2, 4)

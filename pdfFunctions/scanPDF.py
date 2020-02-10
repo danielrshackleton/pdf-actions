@@ -53,8 +53,6 @@ def load_form(filename, password):
         pprint.pprint(pdf_table)
 
 
-
-
 def _decode_fields(field_index):
     field = resolve1(field_index)
     name, value = _decode_decision(field.get('T', b''), '8'), _decode_decision(field.get('V', b''), '16')
@@ -73,7 +71,6 @@ def _decode_decision(value, decode):
         return value
     else:
         return value
-
 
 
 def main():

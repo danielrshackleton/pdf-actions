@@ -1,6 +1,7 @@
 import sys
 
-from PyPDF2 import PdfFileWriter, PdfFileReader
+import PyPDF2
+
 
 def decrypt_pdf(filename, password):
 
@@ -8,8 +9,8 @@ def decrypt_pdf(filename, password):
         sys.exit("Please enter a valid pdf file")
 
     input_stream = open(filename, 'rb')
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(filename)
+    pdf_writer = PyPDF2.PdfFileWriter()
+    pdf_reader = PyPDF2.PdfFileReader(filename)
 
     if pdf_reader.isEncrypted:
         pdf_reader.decrypt(password)

@@ -1,6 +1,6 @@
 import sys
 
-from PyPDF2 import PdfFileWriter, PdfFileReader
+import PyPDF2
 
 
 def encrypt_pdf(filename, password):
@@ -10,8 +10,8 @@ def encrypt_pdf(filename, password):
         sys.exit("Please enter a valid pdf file")
 
     input_stream = open(filename, 'rb')
-    pdf_writer = PdfFileWriter()
-    pdf_reader = PdfFileReader(filename)
+    pdf_writer = PyPDF2.PdfFileWriter()
+    pdf_reader = PyPDF2.PdfFileReader(filename)
 
     if pdf_reader.isEncrypted:
         sys.exit(f'The file "{filename}" is already encrypted.')
@@ -20,15 +20,9 @@ def encrypt_pdf(filename, password):
     for page in range(pdf_reader.numPages):
 
         page_obj = pdf_reader.getPage(page)
-        # orientation = pdf_reader.getPage(page).get('/Rotate')
-        # page_obj.rotateClockwise(0)
         pdf_writer.addPage(page_obj)
 
         pdf_writer.encrypt(password)
-
-        # # overwrite the input pdf file
-        # with open('../newTest.pdf', "wb") as out_file:
-        #     pdf_writer.write(out_file)
 
     del pdf_reader  # PdfFileReader won't mess with the stream anymore
     input_stream.close()

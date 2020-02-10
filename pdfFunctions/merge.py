@@ -1,4 +1,4 @@
-from PyPDF2 import PdfFileMerger, PdfFileReader
+from PyPDF2 import PdfFileMerger
 from pdfFunctions import rotatePDF
 
 
@@ -16,7 +16,7 @@ def merge(in_file1, in_file2, out_file):
 
 if __name__ == '__main__':
     samples = '../samples/'
-    file1 = samples + 'inFile.pdf'
-    file2 = samples + 'unmodifiedPDF.pdf'
+    file1 = samples + 'form2.pdf'
+    file2 = samples + 'form3.pdf'
     out = samples + 'mergeTest.pdf'
     merge(file1, file2, out)
