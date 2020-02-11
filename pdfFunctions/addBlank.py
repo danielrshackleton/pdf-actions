@@ -4,15 +4,15 @@ import PyPDF2
 
 
 def add_blank(filename, page_num):
-    """ Add a blank page to pdf file (also accepts 'first' and 'last') """
+    """ Add a blank page to pdf file (also accepts 'start' and 'end') """
 
     input_stream = open(filename, 'rb')
     pdf_writer = PyPDF2.PdfFileWriter()
     pdf_reader = PyPDF2.PdfFileReader(filename)
 
-    if page_num == 'first':
+    if page_num == 'start':
         page_num = 0
-    elif page_num == 'last':
+    elif page_num == 'end':
         page_num = pdf_reader.numPages - 1
 
     if page_num < 0 or page_num >= pdf_reader.numPages:

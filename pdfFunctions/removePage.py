@@ -4,15 +4,15 @@ import PyPDF2
 
 
 def remove_page(filename, page_num):
-    """ Remove the specified page number from pdf file (accepts 'first' and 'last') """
+    """ Remove the specified page number from pdf file (accepts 'start' and 'end') """
 
     input_stream = open(filename, 'rb')
     pdf_writer = PyPDF2.PdfFileWriter()
     pdf_reader = PyPDF2.PdfFileReader(filename)
 
-    if page_num == 'first':
+    if page_num == 'start':
         page_num = 0
-    elif page_num == 'last':
+    elif page_num == 'end':
         page_num = pdf_reader.numPages - 1
 
     if page_num < 0 or page_num >= pdf_reader.numPages:

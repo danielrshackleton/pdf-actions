@@ -2,7 +2,7 @@
 
 import argparse
 
-from pdfFunctions import rotatePDF, scanPDF, merge, rotatePDF, split, encrypt, decrypt
+from pdfFunctions import rotatePDF, scanPDF, merge, rotatePDF, getRange, encrypt, decrypt
 
 
 def main():
