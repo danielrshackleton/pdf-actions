@@ -1,12 +1,12 @@
 import PyPDF2
 
+from pdfFunctions import readWrite
+
 
 def pdf_rotate(filename):
     """ Automatically rotates a pdf to portrait """
 
-    input_stream = open(filename, 'rb')
-    pdf_writer = PyPDF2.PdfFileWriter()
-    pdf_reader = PyPDF2.PdfFileReader(filename)
+    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
 
     # rotating each page
     for page in range(pdf_reader.numPages):
@@ -26,12 +26,7 @@ def pdf_rotate(filename):
         # adding rotated page object to pdf writer
         pdf_writer.addPage(page_obj)
 
-    del pdf_reader
-    input_stream.close()
-
-    output_stream = open(filename, 'wb')
-    pdf_writer.write(output_stream)
-    output_stream.close()
+    readWrite.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == "__main__":

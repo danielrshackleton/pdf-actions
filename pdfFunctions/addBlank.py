@@ -1,22 +1,27 @@
 import sys
+from pdfFunctions import readWrite
 
-import PyPDF2
 
-
-def add_blank(filename, page_num):
-    """ Add a blank page to pdf file (also accepts 'start' and 'end') """
-
-    input_stream = open(filename, 'rb')
-    pdf_writer = PyPDF2.PdfFileWriter()
-    pdf_reader = PyPDF2.PdfFileReader(filename)
+def _check_values(page_num, reader):
+    """ Checks that page_number is within pdf range """
 
     if page_num == 'start':
         page_num = 0
     elif page_num == 'end':
-        page_num = pdf_reader.numPages - 1
+        page_num = reader.numPages - 1
 
-    if page_num < 0 or page_num >= pdf_reader.numPages:
+    if page_num < 0 or page_num >= reader.numPages:
         sys.exit("Error: page number specified is not in range")
+
+    return page_num
+
+
+def add_blank(filename, page_num):
+    """ Adds blank page to pdf file """
+
+    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
+
+    page_num = _check_values(page_num, pdf_reader)
 
     # Add blank page
     for page in range(pdf_reader.numPages):
@@ -25,7 +30,7 @@ def add_blank(filename, page_num):
 
         # If page == 0, get dimensions of next page and add blank page to start
         if page == page_num and page_num == 0:
-            next_page = pdf_reader.getPage(page+1)
+            next_page = pdf_reader.getPage(page + 1)
             width = next_page.mediaBox.getWidth()
             height = next_page.mediaBox.getHeight()
             pdf_writer.addBlankPage(width, height)
@@ -36,16 +41,9 @@ def add_blank(filename, page_num):
         elif page != page_num:
             pdf_writer.addPage(page_obj)
 
-    # delete pdf_reader object + close input stream so it doesn't interfere with pdf_writer
-    del pdf_reader
-    input_stream.close()
-
-    # Create the output stream and overwrite file
-    output_stream = open(filename, 'wb')
-    pdf_writer.write(output_stream)
-    output_stream.close()
+    readWrite.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == "__main__":
     in_file = '../samples/test.pdf'
-    add_blank(in_file, 'first')
+    add_blank(in_file, 'start')

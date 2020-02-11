@@ -1,22 +1,30 @@
+from pdfFunctions import readWrite
+
 import sys
 
 import PyPDF2
 
 
-def remove_page(filename, page_num):
-    """ Remove the specified page number from pdf file (accepts 'start' and 'end') """
-
-    input_stream = open(filename, 'rb')
-    pdf_writer = PyPDF2.PdfFileWriter()
-    pdf_reader = PyPDF2.PdfFileReader(filename)
+def _check_values(page_num, reader):
+    """ Checks that page_number is within pdf range """
 
     if page_num == 'start':
         page_num = 0
     elif page_num == 'end':
-        page_num = pdf_reader.numPages - 1
+        page_num = reader.numPages - 1
 
-    if page_num < 0 or page_num >= pdf_reader.numPages:
+    if page_num < 0 or page_num >= reader.numPages:
         sys.exit("Error: page number specified is not in range")
+
+    return page_num
+
+
+def remove_page(filename, page_num):
+    """ Remove the specified page number from pdf file (accepts 'start' and 'end') """
+
+    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
+
+    page_num = _check_values(page_num, pdf_reader)
 
     # remove specified page
     for page in range(pdf_reader.numPages):
@@ -26,18 +34,11 @@ def remove_page(filename, page_num):
         if page != page_num:
             pdf_writer.addPage(page_obj)
 
-    # delete pdf_reader object + close input stream so it doesn't interfere with pdf_writer
-    del pdf_reader
-    input_stream.close()
-
-    # Create the output stream and overwrite file
-    output_stream = open(filename, 'wb')
-    pdf_writer.write(output_stream)
-    output_stream.close()
+    readWrite.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == "__main__":
     in_file = '../samples/test.pdf'
-    my_page = 3
+    my_page = 0
     remove_page(in_file, my_page)
     print(f'Page {my_page} removed from {in_file}')
