@@ -1,4 +1,4 @@
-from pdfFunctions import readWrite
+from pdfFunctions import read_write
 
 import sys
 
@@ -22,7 +22,7 @@ def _check_values(page_num, reader):
 def remove_page(filename, page_num):
     """ Remove the specified page number from pdf file (accepts 'start' and 'end') """
 
-    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
+    input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
     page_num = _check_values(page_num, pdf_reader)
 
@@ -34,7 +34,7 @@ def remove_page(filename, page_num):
         if page != page_num:
             pdf_writer.addPage(page_obj)
 
-    readWrite.write_pdf(filename, pdf_writer, input_stream)
+    read_write.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == "__main__":

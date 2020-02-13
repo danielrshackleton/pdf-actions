@@ -1,11 +1,9 @@
 import sys
-from pdfFunctions import readWrite
-
-import PyPDF2
+from pdfFunctions import read_write
 
 
 def decrypt_pdf(filename, password):
-    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
+    input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
     if pdf_reader.isEncrypted:
         pdf_reader.decrypt(password)
@@ -18,7 +16,7 @@ def decrypt_pdf(filename, password):
         page_obj = pdf_reader.getPage(page)
         pdf_writer.addPage(page_obj)
 
-    readWrite.write_pdf(filename, pdf_writer, input_stream)
+    read_write.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == '__main__':

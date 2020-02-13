@@ -2,7 +2,7 @@
 
 import argparse
 
-from pdfFunctions import rotatePDF, scanPDF, merge, rotatePDF, getRange, encrypt, decrypt
+from pdfFunctions import rotate, scan_form, merge, rotate, get_range, encrypt, decrypt
 
 
 def main():
@@ -26,8 +26,8 @@ def main():
 
     file_name = 'samples/form.pdf'
 
-    rotatePDF.pdf_rotate(file_name)
-    scanPDF.load_form(file_name, password=None)
+    rotate.pdf_rotate(file_name)
+    scan_form.load_form(file_name, password=None)
 
 
 if __name__ == "__main__":

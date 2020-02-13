@@ -1,5 +1,5 @@
 from PyPDF2 import PdfFileMerger
-from pdfFunctions import rotatePDF
+from pdfFunctions import rotate
 
 
 def merge(in_file1, in_file2, out_file):

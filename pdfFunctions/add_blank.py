@@ -1,5 +1,5 @@
 import sys
-from pdfFunctions import readWrite
+from pdfFunctions import read_write
 
 
 def _check_values(page_num, reader):
@@ -19,7 +19,7 @@ def _check_values(page_num, reader):
 def add_blank(filename, page_num):
     """ Adds blank page to pdf file """
 
-    input_stream, pdf_reader, pdf_writer = readWrite.read_pdf(filename)
+    input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
     page_num = _check_values(page_num, pdf_reader)
 
@@ -41,7 +41,7 @@ def add_blank(filename, page_num):
         elif page != page_num:
             pdf_writer.addPage(page_obj)
 
-    readWrite.write_pdf(filename, pdf_writer, input_stream)
+    read_write.write_pdf(filename, pdf_writer, input_stream)
 
 
 if __name__ == "__main__":
