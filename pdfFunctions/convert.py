@@ -21,17 +21,17 @@ def main(in_file, out_file, out_type):
     pagenos = set()
     maxpages = 0
     # output option
-    outfile = None
-    outtype = None
+    # outfile = None
+    # outtype = None
     imagewriter = None
     rotation = 0
     stripcontrol = False
     layoutmode = 'normal'
     encoding = 'utf-8'
-    pageno = 1
+    # pageno = 1
     scale = 1
     caching = True
-    showpageno = True
+    # showpageno = True
     laparams = LAParams()
 
     #
@@ -82,7 +82,7 @@ def main(in_file, out_file, out_type):
 
 
 if __name__ == '__main__':
-    infile = '../samples/test.pdf'
-    outfile = '../samples/htmlTest'
-    outtype = 'xml'
+    infile = '../samples/form2.pdf'
+    outfile = '../samples/htmlTest.html'
+    outtype = 'html'
     main(infile, outfile, outtype)

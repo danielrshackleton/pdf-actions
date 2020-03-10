@@ -1,4 +1,5 @@
 import sys
+import os
 
 import PyPDF2
 
@@ -7,6 +8,9 @@ def read_pdf(in_file):
 
     if not in_file.endswith('.pdf'):
         sys.exit('Not a valid pdf file')
+
+    if not os.path.exists(in_file):
+        sys.exit('Not a valid filepath')
 
     input_stream = open(in_file, 'rb')
     pdf_writer = PyPDF2.PdfFileWriter()
