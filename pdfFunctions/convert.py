@@ -26,7 +26,7 @@ def main(in_file, out_file, out_type):
     imagewriter = None
     rotation = 0
     stripcontrol = False
-    layoutmode = 'normal'
+    layoutmode = 'loose'
     encoding = 'utf-8'
     # pageno = 1
     scale = 1
@@ -82,7 +82,7 @@ def main(in_file, out_file, out_type):
 
 
 if __name__ == '__main__':
-    infile = '../samples/form2.pdf'
+    infile = '../samples/unmodifiedPDF.pdf'
     outfile = '../samples/htmlTest.html'
     outtype = 'html'
     main(infile, outfile, outtype)

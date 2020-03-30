@@ -30,5 +30,5 @@ def pdf_rotate(filename):
 
 
 if __name__ == "__main__":
-    orig = '../samples/inFile.pdf'
+    orig = '../samples/form.pdf'
     pdf_rotate(orig)
