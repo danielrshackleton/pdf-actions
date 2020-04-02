@@ -9,6 +9,8 @@ verify_ssl = true
 pdfdocument = "*"
 pypdf2 = "*"
 pdfminer = "*"
+pil = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"

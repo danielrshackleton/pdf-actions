@@ -16,7 +16,7 @@ def merge(in_file1, in_file2, out_file):
 
 if __name__ == '__main__':
     samples = '../samples/'
-    file1 = samples + 'form2.pdf'
-    file2 = samples + 'form3.pdf'
+    file1 = samples + 'test.pdf'
+    file2 = samples + 'test.pdf'
     out = samples + 'mergeTest.pdf'
     merge(file1, file2, out)
