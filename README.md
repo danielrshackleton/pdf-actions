@@ -10,6 +10,7 @@ User must have `pipenv` installed.
 Run `pipenv install` in command line from within project folder.
 
 ## Usage
+
 - **add_blank** - Add a blank page at the specified page.
 - **encrypt** - Encrypt the PDF file.
 - **decrypt** - Decrypt the PDF file.
