@@ -3,7 +3,7 @@ from pdfFunctions import read_write
 
 
 def _check_values(page_num, reader):
-    """ Checks that page_number is within pdf range """
+    """ Checks that page_num is within pdf page range, returns page_num as integer """
 
     if page_num == 'start':
         page_num = 0
@@ -17,7 +17,7 @@ def _check_values(page_num, reader):
 
 
 def add_blank(filename, page_num):
-    """ Adds blank page to pdf file """
+    """ Adds blank page to pdf file at specified page number"""
 
     input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
