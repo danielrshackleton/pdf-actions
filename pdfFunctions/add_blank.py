@@ -41,7 +41,7 @@ def add_blank(filename, page_num):
         elif page != page_num:
             pdf_writer.addPage(page_obj)
 
-    read_write.write_pdf(filename, pdf_writer, input_stream)
+    read_write.write_pdf(filename, pdf_writer, input_stream) 
 
 
 if __name__ == "__main__":
