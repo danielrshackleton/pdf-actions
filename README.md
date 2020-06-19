@@ -21,4 +21,4 @@ Run `pipenv install` in command line from within project folder.
 - **rotate** - Rotate the PDF file.
 - **scan_form** - Scan a PDF form and output the results as key/value pairs.
 
-Run the individual files to see examples within __main__ 
+Run the individual files to see usage examples.
