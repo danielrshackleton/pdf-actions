@@ -14,7 +14,7 @@ Run `pipenv install` in command line from within project folder.
 - **add_blank** - Add a blank page at the specified page.
 - **encrypt** - Encrypt the PDF file.
 - **decrypt** - Decrypt the PDF file.
-- **get_range** - Return a new PDF file containing the pages specified.
+- **get_range** - Writes a new PDF file containing only the pages specified.
 - **merge** - Merge two PDF files together.
 - **remove_blank** - Remove blank pages from the PDF file.
 - **remove_page** - Remove the specified page number from the PDF file.
