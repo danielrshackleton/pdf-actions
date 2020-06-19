@@ -6,7 +6,7 @@ import PyPDF2
 
 
 def _check_values(page_num, reader):
-    """ Checks that page_number is within pdf range """
+    """ Checks that page_number is within pdf range (parses to int if 'start'/'end') """
 
     if page_num == 'start':
         page_num = 0
@@ -20,7 +20,7 @@ def _check_values(page_num, reader):
 
 
 def remove_page(filename, page_num):
-    """ Remove the specified page number from pdf file (accepts 'start' and 'end') """
+    """ Remove specified page number from pdf file """
 
     input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
