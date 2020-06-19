@@ -3,7 +3,7 @@ from pdfFunctions import read_write
 
 
 def get_range(in_file, out_file, start_page, end_page):
-    """ Remove pages not in range """
+    """ Remove pages not in range and write new pdf """
 
     input_stream, pdf_reader, pdf_writer = read_write.read_pdf(in_file)
 
