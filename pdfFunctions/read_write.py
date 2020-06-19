@@ -4,6 +4,7 @@ import PyPDF2
 
 
 def read_pdf(in_file):
+    """ Opens pdf file, and creates and returns FileReader and FileWriter objects  """
 
     if not in_file.endswith('.pdf'):
         sys.exit('Not a valid pdf file')
@@ -16,6 +17,7 @@ def read_pdf(in_file):
 
 
 def write_pdf(out_file, writer, in_stream):
+    
     in_stream.close()
 
     # Create the output stream and overwrite file
