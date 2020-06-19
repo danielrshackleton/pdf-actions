@@ -20,7 +20,8 @@ def _check_values(page_num, reader):
 
 
 def remove_blank(filename):
-
+    """ Removes any blank pages from the pdf """
+    
     input_stream, pdf_reader, pdf_writer = read_write.read_pdf(filename)
 
     # rotating each page
