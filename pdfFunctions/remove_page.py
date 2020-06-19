@@ -6,7 +6,7 @@ import PyPDF2
 
 
 def _check_values(page_num, reader):
-    """ Checks that page_number is within pdf range (parses to int if 'start'/'end') """
+    """ Checks that page_number is within pdf range (also accepts 'start'/'end') """
 
     if page_num == 'start':
         page_num = 0
