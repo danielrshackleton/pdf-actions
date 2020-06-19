@@ -20,3 +20,5 @@ Run `pipenv install` in command line from within project folder.
 - **remove_page** - Remove the specified page number from the PDF file.
 - **rotate** - Rotate the PDF file.
 - **scan_form** - Scan a PDF form and output the results as key/value pairs.
+
+Run the individual files to see examples within __main__ 
